@@ -262,6 +262,309 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://loubya.github.io/2020/07/02/20200702-Finding-suitable-aligners-for-my-project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Po-Kai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.imgur.com/gJGAo55.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Po-Kai's Note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/02/20200702-Finding-suitable-aligners-for-my-project/" itemprop="url">Finding suitable aligners for my project</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-02T00:06:04-07:00">
+                2020-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RNA-seq/" itemprop="url" rel="index">
+                    <span itemprop="name">RNA-seq</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RNA-seq/Dry-lab/" itemprop="url" rel="index">
+                    <span itemprop="name">Dry_lab</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/07/02/20200702-Finding-suitable-aligners-for-my-project/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/07/02/20200702-Finding-suitable-aligners-for-my-project/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Owing to the stay-at-home order, I cannot do my wet lab experiment anymore. To use this time effectively, I revisited my Mimulus time course data and thought through the questions I listed in the to-do note. I found that I still don’t have good answers for most of the questions, even though those are frequently brought up in meetings. For example, people always ask something like, “Have you considered using…” or “Why don’t you try…”. However, they barely give you a concrete reason for those suggestions (for example, what are the pros and cons of the tools they suggest, comparing to the original one I used). </p>
+<p>Yes, the only way to know if a program is suitable for my data is to test it by myself and tweak the parameters if necessary. However, there are numerous programs, so just asking others to use some tools without any specific reason or guideline is not very persuasive and meaningful during the discussion. <del>Of course, if you nod off during the meeting but unfortunately still have to say something, anyway, this is a way for doing it.</del></p>
+<p>Therefore, one of my goals recently is to have perceptions of those frequently-asked questions, about how to chose tools especially. In this post, I will record some thoughts about the decision making of <strong>RNA-seq aligners</strong>.</p>
+<p>First, let’s see how many aligners are available now. You can find an astonishing summary figure (i.e. a super long one!!!!) right in the middle of <a href="https://www.ecseq.com/support/ngs/what-is-the-best-ngs-alignment-software" target="_blank" rel="noopener">this article</a>. This article is talking about the topic which is very relevant to my post: “What is the best NGS alignment software”. Since it was written in 2016, I would say there should be some updates after then (i.e. more aligners! Ones have an interest in the exact number can check the gigantic list on Wiki).</p>
+<p>Nonetheless, don’t worry! This list can be further narrow down to the length that somewhat I can handle. Let’s consider some criteria:</p>
+<ol>
+<li>It should be <strong>splice aware</strong>, for I would like to align the RNA-seq reads to the <strong>genome</strong>.</li>
+<li>It is still used broadly and maintained by the authors.</li>
+<li>I prefer the tools with lighter computational load and higher speed.</li>
+</ol>
+<p>Then, I checked the latest articles in regard to the comparison of the RNA-seq aligners to see some convincing and up-to-date evidence. Surprisingly, there are only a few articles talking about this question, and the latest two are:</p>
+<blockquote>
+<p>2016, Baruzzo <em>et al.</em> <a href="https://www.nature.com/articles/nmeth.4106" target="_blank" rel="noopener">“Simulation-based comprehensive benchmarking of RNA-seq aligners”</a></p>
+</blockquote>
+<blockquote>
+<p>2019, Raplee <em>et al.</em> <a href="https://www.mdpi.com/2075-4426/9/2/18" target="_blank" rel="noopener">“Aligning the Aligners: Comparison of RNA Sequencing Data Alignment and Gene Expression Quantification Tools for Clinical Breast Cancer Research”</a></p>
+</blockquote>
+<p>I recommend using Baruzzo’s article as the guideline for choosing aligners and tweaking the parameters, for it demonstrates the results of comprehensive investigations with good experimental design. Moreover, <font color=#800000>the authors even kindly provide the instruction about the parameter tweaking in the supplementary information!</font> On the other hand, although Raplee’s article was published later, it has some defects and only compares HISAT2 and STAR. I will discuss this article in the other post.</p>
+<h2 id="Baruzzo’s-article-2016"><a href="#Baruzzo’s-article-2016" class="headerlink" title="Baruzzo’s article, 2016"></a>Baruzzo’s article, 2016</h2><p>Let’s take a closer look into Baruzzo’s article first. Here are some details of the experimental design:</p>
+<ul>
+<li>Comparing 14 splice-aware algorithms</li>
+<li>Analyzing performance at 3 levels:<ul>
+<li>base level</li>
+<li>read level: most relevant for <font color=#800000>gene-level quantification</font></li>
+<li>junction level: important in reconstructing <font color=#800000>alternative splicing events</font></li>
+</ul>
+</li>
+<li>Default vs. Optimized parameter settings</li>
+<li>Simulating data: <ul>
+<li>(1) human and (2) malaria parasite <em>Plasmodium falciparum</em> </li>
+<li>three levels (T1-T3)<table>
+<thead>
+<tr>
+<th>Levels</th>
+<th>Substitution</th>
+<th>Indel</th>
+<th>Error rates</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T1</td>
+<td>0.001</td>
+<td>0.0001</td>
+<td>0.005</td>
+<td>Human</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>0.005</td>
+<td>0.002</td>
+<td>0.01</td>
+<td>Model organisms</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>0.03</td>
+<td>0.005</td>
+<td>0.02</td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li>Other analyses, e.g. multimappers, adapters, and two-pass mode </li>
+</ul>
+<p>And yes, there is a one-line suggestion (I guess that’s what most readers search first for when reading this kind of article) in the discussion section: </p>
+<blockquote>
+<p>“Based on this analysis the most reliable general-purpose aligners appear to be CLC, Novoalign, GSNAP, and STAR.”</p>
+</blockquote>
+<p><strong>However</strong>, don’t jump into the conclusion! Be aware, this sentence is in the <strong>discussion</strong> section rather in the abstract or introduction…</p>
+<p>One presumption for this one-line summary is you would <font color=#800000>only use the default settings without any tweaking</font>. According to Figure 3 in the article, some aligners can perform pretty well after adjusting some parameters. Therefore, you may want to consider the speed of the aligning for making the decision (Figure 4 in the article); for example, HISAT2 perform far faster than others.</p>
+<blockquote class="imgur-embed-pub" lang="en" data-id="UVQegWJ"><a href="//imgur.com/UVQegWJ" target="_blank" rel="noopener"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+
+<p><font color=#808080><em>Figure 3 in Baruzzo’s article. Note that parameter tweaking is necessary for some of the aligners (e.g. HISAT2). For others, teaking is optional but can improve the results (e.g. STAR).</em></font></p>
+<p>Here are several points I feel important and take into account after reading:</p>
+<ol>
+<li><p>In fact, all aligners perform well for the T1 libries with default, expect for CRAC. </p>
+<ul>
+<li>That means you can use whatever you like for the high quality sequencing of humans.</li>
+<li>Even for T2 (certain model organisms with good annotations), most aligners with default setting can handle the task well.</li>
+</ul>
+</li>
+<li><p>Some aligners are remarkably accurate even for the very short anchors and without annotation, and therefore outperform others at junction level. Thus, if the isoform discovery is what you want to do, consider those aligners: HISAT, HISAT2, and ContexMap2.</p>
+</li>
+<li><p>Some aligners are GUI (graphical user interface), and some of them require licence to use.</p>
+</li>
+<li><p>With annotations, 2-pass model is not required (save the time!). </p>
+</li>
+<li><p>Some famous aligners (e.g. TopHat2) are not good choice!</p>
+</li>
+</ol>
+<p><font color=#800000><strong>Eventually, I chose STAR and HISAT2.</strong></font> Here are some notes for making this decision:</p>
+<ul>
+<li><strong>STAR</strong>: Pretty fast and balance for most situations. Tweaking can further improve the performance.</li>
+<li><strong>HISAT2</strong>: Super fast, but the tweaking is necessary (I have done this before so it’s OK for me).</li>
+</ul>
+<ul>
+<li>CLC: GUI; I don’t think my laptop can run it very fast.</li>
+<li>Novoalign: Licence required.</li>
+<li>GSNAP: Our computing cluster (FARM) does not have the latest version. The version we have is version 2017-11-15. Maybe I can try it in the future.</li>
+</ul>
+<p>Besides, I also considered BBMap as some posts recommanded it on forums and it is still updating. I wonder why it is not included in Baruzzo’s article because I know JGI is still using BBMap. So maybe I will try it someday.  </p>
+<h2 id="Raplee’s-article-2019"><a href="#Raplee’s-article-2019" class="headerlink" title="Raplee’s article, 2019"></a>Raplee’s article, 2019</h2><p>This article only compared STAR and HISAT2 with default setting, and I will discuss it in the other post. The most important discovery in this article is it showed that the <font color=#800000>default HISAT2 cannot handle pseudogenes very well</font>, and this issue became very servere under some circanstances. This finding also imply the importance of using different tools to analyze data.</p>
+<hr>
+<h2 id="Suggestions-on-Forums"><a href="#Suggestions-on-Forums" class="headerlink" title="Suggestions on Forums"></a>Suggestions on Forums</h2><p>Reading the discussion on forums (SEQanswers and Biostars) provided me some ideas as lots of users share their experience and results. However, I found there are some pitfalls and should be aware of some points:</p>
+<ol>
+<li>The <strong>date</strong> of the post.<ul>
+<li>Bear in mind the fast-evolving nature of NGS!</li>
+</ul>
+</li>
+<li>Check more posts of the users who responded the questions you have interest in.<ul>
+<li>To know if the guy is an expert or just a passerby.</li>
+</ul>
+</li>
+<li>The data set and the organism discussed in the post. <ul>
+<li>The strategy could be very different for distinct experimental materials.</li>
+</ul>
+</li>
+<li>Evidence talks.<ul>
+<li>Go through the example in the post carefully. Some of them may not be very reasonable…</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="Othe-articles"><a href="#Othe-articles" class="headerlink" title="Othe articles"></a>Othe articles</h2><p>Just like I mentioned above, I am surprised when I found that there are not so many articles related to the aligner comparison. For whom it may be interesting, here are some older articles, and it is worth mentioning that none of them include HISAT/HISAT2, two of the fastest aligners curently: </p>
+<blockquote>
+<p>2014, Wang <em>et al.</em><a href="https://ieeexplore.ieee.org/document/7045249" target="_blank" rel="noopener">“Comparisons and performance evaluations of RNA-seq alignment tools”</a>: Tophat, STAR, MapSplice, and GNSAP</p>
+</blockquote>
+<blockquote>
+<p>2014, Benjamin <em>et al.</em><a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-570" target="_blank" rel="noopener">“Comparing reference-based RNA-Seq mapping methods for non-human primate data”</a>: (splice-aware aligners) TopHat2 and GSNAP</p>
+</blockquote>
+<blockquote>
+<p>2013, Engström <em>et al.</em><a href="https://www.nature.com/articles/nmeth.2722" target="_blank" rel="noopener">“Systematic evaluation of spliced alignment programs for RNA-seq data”</a>: (splice-aware aligners) GSNAP, MapSplice, PALMapper, ReadsMap, STAR and TopHat</p>
+</blockquote>
+<blockquote>
+<p>2012, Fonseca <em>et al.</em><a href="https://academic.oup.com/bioinformatics/article/28/24/3169/245777" target="_blank" rel="noopener">“Tools for mapping high-throughput sequencing data”</a>: a long list</p>
+</blockquote>
+<p>Also, you can check the rollout papers of aligners because the authors have to persuade editors that their new tools have some advantage over others. Besides, some articles did not compare the aligners directly, but went through the entire quantative procedure to do the comparison.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://loubya.github.io/2020/06/19/20200619-Factors-affecting-the-alignment-of-RNA-seq-reads/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -918,7 +1221,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
