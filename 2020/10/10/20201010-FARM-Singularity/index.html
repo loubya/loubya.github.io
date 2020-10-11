@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Dry_lab,FARM,Containers," />
+  <meta name="keywords" content="FARM,Dry_lab,Containers," />
 
 
 
@@ -95,10 +95,10 @@
 <meta property="og:image" content="https://i.imgur.com/YH0THWx.png">
 <meta property="og:image" content="https://i.imgur.com/EScWeoD.png">
 <meta property="article:published_time" content="2020-10-11T06:05:57.000Z">
-<meta property="article:modified_time" content="2020-10-11T07:19:21.246Z">
+<meta property="article:modified_time" content="2020-10-11T07:27:45.441Z">
 <meta property="article:author" content="Po-Kai">
-<meta property="article:tag" content="Dry_lab">
 <meta property="article:tag" content="FARM">
+<meta property="article:tag" content="Dry_lab">
 <meta property="article:tag" content="Containers">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.imgur.com/BuPR4LQ.png">
@@ -388,7 +388,7 @@
         <h2 id="Why-using-Singularity"><a href="#Why-using-Singularity" class="headerlink" title="Why using Singularity?"></a>Why using Singularity?</h2><p>Singularity is a container platform and is the only container installed on FARM cluster because of its higher security compared to Docker, which is the other (more) famous container. Therefore, for tasting the benefit of using containers in bioinformatic analyses, I played around with Singularity using some tutorial examples.</p>
 <p>I would say there are far more tutorials for Docker than for Singularity. In addition, there is a larger number of existing bioinformatic container imagines in <a href="https://hub.docker.com/" target="_blank" rel="noopener">Docker Hub</a>, a Docker registry. For example, I found there was no container imagine for HISAT2 (a popular aligner for RNAseq) in the registry of Singularity called <a href="https://cloud.sylabs.io/home" target="_blank" rel="noopener">Sylabs Cloud</a> (this post was written in Oct 2020), but there were tons of HISAT2 container imagines in Docker Hub. </p>
 <p>Fortunately, Singularity can import Docker container images. That means you can still utilize the deposits on Docker Hub! For example, try:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[singularity run docker://godlovedc/lolcow]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">singularity run docker://godlovedc/lolcow</span><br></pre></td></tr></table></figure>
 
 <p>There are some warning messages, but it still works and you can still see the cow talking some <del>weird</del> jokes on your screen.<br><img src="https://i.imgur.com/BuPR4LQ.png" alt="Imgur"></p>
 <hr>
@@ -396,8 +396,12 @@
 <h3 id="Create-a-Singularity-image"><a href="#Create-a-Singularity-image" class="headerlink" title="Create a Singularity image"></a>Create a Singularity image</h3><p>Well, you cannot do this on FARM because the <code>sudo</code> command (system administration only) is required. Forget it or do it on your own computer.</p>
 <a id="more"></a>
 
-<h3 id="Pull-images"><a href="#Pull-images" class="headerlink" title="Pull images"></a>Pull images</h3><p> It is a good practice to create a directory for downloading the images you have interest in.<br><code>mkdir Singularity</code></p>
-<p>Then enter the directory.<br><code>cd Singularity</code></p>
+<h3 id="Pull-images"><a href="#Pull-images" class="headerlink" title="Pull images"></a>Pull images</h3><p> It is a good practice to create a directory for downloading the images you have interest in.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir Singularity</span><br></pre></td></tr></table></figure>
+
+<p>Then enter the directory.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> Singularity</span><br></pre></td></tr></table></figure>
+
 <p>Now you can use <code>singularity pull</code> to download both the Singularity and Docker images to your system.</p>
 <h3 id="Interact-with-Singularity-images"><a href="#Interact-with-Singularity-images" class="headerlink" title="Interact with Singularity images"></a>Interact with Singularity images</h3><p>There are 3 ways to interact with Singularity imagines: <code>shell</code>, <code>run</code>, and <code>exec</code>.</p>
 <ol>
@@ -415,19 +419,39 @@
 <center>Human prion protein sequence -(BLAST)-> Zebrafish protein database</center>
 
 <h3 id="Download-BLAST-image"><a href="#Download-BLAST-image" class="headerlink" title="Download BLAST image"></a>Download BLAST image</h3><p>First, it seems directly convert <code>docker pull biocontainers/blast:2.2.31</code> to <code>singularity pull biocontainers/blast:2.2.31</code> does not work. It could be because the URI does not work anymore. Therefore, I checked the Biocontainers registry directly:<br><img src="https://i.imgur.com/brFfQrq.png" alt="Imgur"><br><img src="https://i.imgur.com/oes9EMV.png" alt="Imgur"></p>
-<p>OK, now I found the suggested command to download the Singularity image:<br><code>singularity pull https://depot.galaxyproject.org/singularity/blast:2.9.0--pl526he19e7b1_7</code></p>
-<p>To print the help page of BLAST:<br><code>singularity run blast:2.9.0--pl526he19e7b1_7 blastp -help</code><br>The <code>blastp -help</code> command after <code>singularity run</code> specifies the container to open the help page.<br><img src="https://i.imgur.com/oCwZUs7.png" alt="Imgur"></p>
-<h3 id="Download-the-necessary-data-for-BLAST"><a href="#Download-the-necessary-data-for-BLAST" class="headerlink" title="Download the necessary data for BLAST"></a>Download the necessary data for BLAST</h3><p>Interestingly, even though the documentation suggested using<br><code>docker run biocontainers/blast:2.2.31 curl https://www.uniprot.org/uniprot/P04156.fasta &gt;&gt; P04156.fasta</code><br>to download the data required for the trial run, I could not use something like<br><code>singularity run biocontainers/blast:2.2.31 curl https://www.uniprot.org/uniprot/P04156.fasta &gt;&gt; P04156.fasta</code><br>to do so.</p>
+<p>OK, now I found the suggested command to download the Singularity image:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">singularity pull https://depot.galaxyproject.org/singularity/blast:2.9.0--pl526he19e7b1_7</span><br></pre></td></tr></table></figure>
+
+<p>To print the help page of BLAST:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">singularity run blast:2.9.0--pl526he19e7b1_7 blastp -<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+<p>The <code>blastp -help</code> command after <code>singularity run</code> specifies the container to open the help page.<br><img src="https://i.imgur.com/oCwZUs7.png" alt="Imgur"></p>
+<h3 id="Download-the-necessary-data-for-BLAST"><a href="#Download-the-necessary-data-for-BLAST" class="headerlink" title="Download the necessary data for BLAST"></a>Download the necessary data for BLAST</h3><p>Interestingly, even though the documentation suggested using</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run biocontainers/blast:2.2.31 curl https://www.uniprot.org/uniprot/P04156.fasta &gt;&gt; P04156.fasta</span><br></pre></td></tr></table></figure>
+<p>to download the data required for the trial run, I could not use something like </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">singularity run biocontainers/blast:2.2.31 curl https://www.uniprot.org/uniprot/P04156.fasta &gt;&gt; P04156.fasta</span><br></pre></td></tr></table></figure>
+<p>to do so.</p>
 <p>Therefore, just download the necessary data into the directory containing the BLAST image:</p>
-<p>Download the human prion sequence:<br><code>curl https://www.uniprot.org/uniprot/P04156.fasta &gt;&gt; P04156.fasta</code></p>
-<p>Download the zebrafish database:<br><code>curl -O ftp://ftp.ncbi.nih.gov/refseq/D_rerio/mRNA_Prot/zebrafish.1.protein.faa.gz</code></p>
-<p>Unzip it:<br><code>gunzip zebrafish.1.protein.faa.gz</code></p>
+<p>Download the human prion sequence:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://www.uniprot.org/uniprot/P04156.fasta &gt;&gt; P04156.fasta</span><br></pre></td></tr></table></figure>
+
+<p>Download the zebrafish database:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -O ftp://ftp.ncbi.nih.gov/refseq/D_rerio/mRNA_Prot/zebrafish.1.protein.faa.gz</span><br></pre></td></tr></table></figure>
+
+<p>Unzip it:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gunzip zebrafish.1.protein.faa.gz</span><br></pre></td></tr></table></figure>
+
 <p>Now, here are what we have in the directory:<br><img src="https://i.imgur.com/luWhKXe.png" alt="Imgur"></p>
-<h3 id="Run-the-BLAST"><a href="#Run-the-BLAST" class="headerlink" title="Run the BLAST"></a>Run the BLAST</h3><p>If you only run:<br><code>singularity run blast:2.9.0--pl526he19e7b1_7</code></p>
-<p>As you can see, you will open a new shell (you will find that the custom prompt is now “Singularity&gt;”), just like you do:<br><code>singularity shell blast:2.9.0--pl526he19e7b1_7</code><br><img src="https://i.imgur.com/ABoDv8z.png" alt="Imgur"><br>I would guess that is because the author writes this in the runscript to make this happen.</p>
+<h3 id="Run-the-BLAST"><a href="#Run-the-BLAST" class="headerlink" title="Run the BLAST"></a>Run the BLAST</h3><p>If you only run:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">singularity run blast:2.9.0--pl526he19e7b1_7</span><br></pre></td></tr></table></figure>
+
+<p>As you can see, you will open a new shell (you will find that the custom prompt is now “Singularity&gt;”), just like you do:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">singularity shell blast:2.9.0--pl526he19e7b1_7</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/ABoDv8z.png" alt="Imgur"><br>I would guess that is because the author writes this in the runscript to make this happen.</p>
 <p>Anyway, let’s use <code>singularity shell blast:2.9.0--pl526he19e7b1_7</code> and enter the container. Then, in the Singularity shell:</p>
 <ol>
-<li>Prepare the database:<br><code>makeblastdb -in zebrafish.1.protein.faa -dbtype prot</code></li>
+<li>Prepare the database:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">makeblastdb -<span class="keyword">in</span> zebrafish.1.protein.faa -dbtype prot</span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
 <p>That will create files:</p>
 <ul>
@@ -436,15 +460,19 @@
 <li>zebrafish.1.protein.faa.psp</li>
 </ul>
 <ol start="2">
-<li>Run the BLAST:<br><code>blastp -query P04156.fasta -db zebrafish.1.protein.faa -out results.txt</code></li>
-</ol>
+<li><p>Run the BLAST:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blastp -query P04156.fasta -db zebrafish.1.protein.faa -out results.txt</span><br></pre></td></tr></table></figure>
 <p>Here are the files in the directory now:<br><img src="https://i.imgur.com/YH0THWx.png" alt="Imgur"></p>
-<ol start="3">
+</li>
 <li><p>Try to use nano to check the result in the container:<br>You will see the error, <code>bash: nano: command not found</code>, that is <strong>normal</strong>! Because there is no nano installed in the container, even though it is installed on FARM.</p>
 </li>
-<li><p>Leave the container:<br><code>exit</code><br>You will see that the custom prompt is now back to the original one.</p>
+<li><p>Leave the container:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+<p>You will see that the custom prompt is now back to the original one.</p>
 </li>
-<li><p>Check the result in the original shell:<br><code>nano results.txt</code><br><img src="https://i.imgur.com/EScWeoD.png" alt="Imgur"></p>
+<li><p>Check the result in the original shell:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano results.txt</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/EScWeoD.png" alt="Imgur"></p>
 </li>
 </ol>
 <hr>
@@ -474,9 +502,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Dry-lab/" rel="tag"># Dry_lab</a>
-          
             <a href="/tags/FARM/" rel="tag"># FARM</a>
+          
+            <a href="/tags/Dry-lab/" rel="tag"># Dry_lab</a>
           
             <a href="/tags/Containers/" rel="tag"># Containers</a>
           
