@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Dry_lab,FARM,Containers," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Why using Singularity?Singularity is a container platform and is the only container installed on FARM cluster because of its higher security compared to Docker, which is the other (more) famous contai">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Singularity on UCD FARM Cluster">
+<meta property="og:url" content="https://loubya.github.io/2020/10/10/20201010-FARM-Singularity/index.html">
+<meta property="og:site_name" content="Po-Kai&#39;s Note">
+<meta property="og:description" content="Why using Singularity?Singularity is a container platform and is the only container installed on FARM cluster because of its higher security compared to Docker, which is the other (more) famous contai">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-11T06:05:57.000Z">
+<meta property="article:modified_time" content="2020-10-11T06:12:47.174Z">
+<meta property="article:author" content="Po-Kai">
+<meta property="article:tag" content="Dry_lab">
+<meta property="article:tag" content="FARM">
+<meta property="article:tag" content="Containers">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://loubya.github.io/2020/10/10/20201010-FARM-Singularity/"/>
+
+
+
+
+
+  <title>Using Singularity on UCD FARM Cluster | Po-Kai's Note</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Po-Kai's Note</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">A Ph.D. student's random writing</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://loubya.github.io/2020/10/10/20201010-FARM-Singularity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Po-Kai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.imgur.com/gJGAo55.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Po-Kai's Note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Using Singularity on UCD FARM Cluster</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-10T23:05:57-07:00">
+                2020-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FARM/" itemprop="url" rel="index">
+                    <span itemprop="name">FARM</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FARM/Containers/" itemprop="url" rel="index">
+                    <span itemprop="name">Containers</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/10/10/20201010-FARM-Singularity/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/10/10/20201010-FARM-Singularity/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Why-using-Singularity"><a href="#Why-using-Singularity" class="headerlink" title="Why using Singularity?"></a>Why using Singularity?</h2><p>Singularity is a container platform and is the only container installed on FARM cluster because of its higher security compared to Docker, which is the other (more) famous container. Therefore, for tasting the benefit of using containers in bioinformatic analyses, I played around with Singularity using some tutorial examples.</p>
+<p>I would say there are far more tutorials for Docker than for Singularity. In addition, there is a larger number of existing bioinformatic container imagines in <a href="https://hub.docker.com/" target="_blank" rel="noopener">Docker Hub</a>, a Docker registry. For example, I found there was no container imagine for HISAT2 (a popular aligner for RNAseq) in the registry of Singularity called <a href="https://cloud.sylabs.io/home" target="_blank" rel="noopener">Sylabs Cloud</a> (this post was written in Oct 2020), but there were tons of HISAT2 container imagines in Docker Hub. </p>
+<p>Fortunately, Singularity can import Docker container images. That means you can still utilize the deposits on Docker Hub! For example, try:<br><code>singularity run docker://godlovedc/lolcow</code></p>
+<p>There are some warning messages, but it still works and you can still see the cow talking some <del>weird</del> jokes on your screen.<br><a href="https://i.imgur.com/BuPR4LQ.png" target="_blank" rel="noopener">Imgur</a></p>
+<hr>
+<h2 id="Run-Singularity-on-FARM-Basic"><a href="#Run-Singularity-on-FARM-Basic" class="headerlink" title="Run Singularity on FARM: Basic"></a>Run Singularity on FARM: Basic</h2><p>You will see me go through most of them bellow for running the example provided by Biocontainers. Here are some brief introductions of those commands.</p>
+<h3 id="Create-a-Singularity-image"><a href="#Create-a-Singularity-image" class="headerlink" title="Create a Singularity image"></a>Create a Singularity image</h3><p>Well, you cannot do this on FARM because the <code>sudo</code> command (system administration only) is required. Forget it or do it on your own computer.</p>
+<a id="more"></a>
+
+<h3 id="Pull-images"><a href="#Pull-images" class="headerlink" title="Pull images"></a>Pull images</h3><p> It is a good practice to create a directory for downloading the images you have interest in.<br><code>mkdir Singularity</code></p>
+<p>Then enter the directory.<br><code>cd Singularity</code></p>
+<p>Now you can use <code>singularity pull</code> to download both the Singularity and Docker images to your system.</p>
+<h3 id="Interact-with-Singularity-images"><a href="#Interact-with-Singularity-images" class="headerlink" title="Interact with Singularity images"></a>Interact with Singularity images</h3><p>There are 3 ways to interact with Singularity imagines: <code>shell</code>, <code>run</code>, and <code>exec</code>.</p>
+<ol>
+<li><code>singularity shell</code>: Create a new shell within your container, so it is like you enter the container and use a small computer to work inside. </li>
+</ol>
+<ol start="2">
+<li><code>singularity exec</code>: You can specify the custom command in the container.</li>
+</ol>
+<ol start="3">
+<li><code>singularity run</code>: You will ask the container to run the runscripts created by the image author.</li>
+</ol>
+<p>You may want to experience these three different flavors by running the lolcow example in the <a href="https://sylabs.io/guides/3.5/user-guide/quick_start.html" target="_blank" rel="noopener">Singularity documentation</a>.  </p>
+<hr>
+<h2 id="Run-Singularity-on-FARM-with-the-Blast-example-on-Bocontainers"><a href="#Run-Singularity-on-FARM-with-the-Blast-example-on-Bocontainers" class="headerlink" title="Run Singularity on FARM: with the Blast example on Bocontainers"></a>Run Singularity on FARM: with the Blast example on Bocontainers</h2><p>Even though it is exciting to find the bioinformatic container you want in the registry, here comes the other problem: how to choose the container if there are so many redundancies (eg ~10 containers labeled as “HISAT2” in Docker)? Also, you may wonder if those containers are still maintained by the author and updated properly. The other concern is that according to the Singularity documentation, *”Pulling Docker images reduces reproducibility. If you were to pull a Docker image today and then wait six months and pull again, you are not guaranteed to get the same image.”* That indicates it would be better to find some reliable Singularity registry rather than just import the Docker image if you can. I found the Biocontainers project is a good solution for those problems, and I will have the other post about Biocontainers. Now let’s just go through the BLAST example in Biocontainers documentation with some modifications: <a href="https://biocontainers-edu.readthedocs.io/en/latest/running_example.html" target="_blank" rel="noopener">Running first container — BioContainers documentation</a> The goal of this demonstration is to find if the zebrafish has a protein similar to human’s prion protein by BLAST.</p>
+<center>Human prion protein sequence -(BLAST)-> Zebrafish protein database</center>
+
+<h3 id="Download-BLAST-image"><a href="#Download-BLAST-image" class="headerlink" title="Download BLAST image"></a>Download BLAST image</h3><p>First, it seems directly convert <code>docker pull biocontainers/blast:2.2.31</code> to <code>singularity pull biocontainers/blast:2.2.31</code> does not work. It could be because the URI does not work anymore. Therefore, I checked the Biocontainers registry directly:<br><a href="https://i.imgur.com/brFfQrq.png" target="_blank" rel="noopener">Imgur</a><br><a href="https://i.imgur.com/oes9EMV.png" target="_blank" rel="noopener">Imgur</a></p>
+<p>OK, now I found the suggested command to download the Singularity image:<br><code>singularity pull https://depot.galaxyproject.org/singularity/blast:2.9.0--pl526he19e7b1_7</code></p>
+<p>To print the help page of BLAST:<br><code>singularity run blast:2.9.0--pl526he19e7b1_7 blastp -help</code><br>The <code>blastp -help</code> command after <code>singularity run</code> specifies the container to open the help page.<br><a href="https://i.imgur.com/oCwZUs7.png" target="_blank" rel="noopener">Imgur</a></p>
+<h3 id="Download-the-necessary-data-for-BLAST"><a href="#Download-the-necessary-data-for-BLAST" class="headerlink" title="Download the necessary data for BLAST"></a>Download the necessary data for BLAST</h3><p>Interestingly, even though the documentation suggested using<br><code>docker run biocontainers/blast:2.2.31 curl https://www.uniprot.org/uniprot/P04156.fasta &gt;&gt; P04156.fasta</code><br>to download the data required for the trial run, I could not use something like<br><code>singularity run biocontainers/blast:2.2.31 curl https://www.uniprot.org/uniprot/P04156.fasta &gt;&gt; P04156.fasta</code><br>to do so.</p>
+<p>Therefore, just download the necessary data into the directory containing the BLAST image:</p>
+<p>Download the human prion sequence:<br><code>curl https://www.uniprot.org/uniprot/P04156.fasta &gt;&gt; P04156.fasta</code></p>
+<p>Download the zebrafish database:<br><code>curl -O ftp://ftp.ncbi.nih.gov/refseq/D_rerio/mRNA_Prot/zebrafish.1.protein.faa.gz</code></p>
+<p>Unzip it:<br><code>gunzip zebrafish.1.protein.faa.gz</code></p>
+<p>Now, here are what we have in the directory:<br><a href="https://i.imgur.com/luWhKXe.png" target="_blank" rel="noopener">Imgur</a></p>
+<h3 id="Run-the-BLAST"><a href="#Run-the-BLAST" class="headerlink" title="Run the BLAST"></a>Run the BLAST</h3><p>If you only run:<br><code>singularity run blast:2.9.0--pl526he19e7b1_7</code></p>
+<p>As you can see, you will open a new shell (you will find that the custom prompt is now “Singularity&gt;”), just like you do:<br><code>singularity shell blast:2.9.0--pl526he19e7b1_7</code><br><a href="https://i.imgur.com/ABoDv8z.png" target="_blank" rel="noopener">Imgur</a><br>I would guess that is because the author writes this in the runscript to make this happen.</p>
+<p>Anyway, let’s use <code>singularity shell blast:2.9.0--pl526he19e7b1_7</code> and enter the container. Then, in the Singularity shell:</p>
+<ol>
+<li>Prepare the database:<br><code>makeblastdb -in zebrafish.1.protein.faa -dbtype prot</code></li>
+</ol>
+<p>That will create files:</p>
+<ul>
+<li>zebrafish.1.protein.faa.pin</li>
+<li>zebrafish.1.protein.faa.phr</li>
+<li>zebrafish.1.protein.faa.psp</li>
+</ul>
+<ol start="2">
+<li>Run the BLAST:<br><code>blastp -query P04156.fasta -db zebrafish.1.protein.faa -out results.txt</code></li>
+</ol>
+<p>Here are the files in the directory now:<br><a href="https://i.imgur.com/YH0THWx.png" target="_blank" rel="noopener">Imgur</a></p>
+<ol start="3">
+<li><p>Try to use nano to check the result in the container:<br>You will see the error, <code>bash: nano: command not found</code>, that is <strong>normal</strong>! Because there is no nano installed in the container, even though it is installed on FARM.</p>
+</li>
+<li><p>Leave the container:<br><code>exit</code><br>You will see that the custom prompt is now back to the original one.</p>
+</li>
+<li><p>Check the result in the original shell:<br><code>nano results.txt</code><br><a href="https://i.imgur.com/EScWeoD.png" target="_blank" rel="noopener">Imgur</a></p>
+</li>
+</ol>
+<hr>
+<h2 id="Reference-and-helpful-tutorials"><a href="#Reference-and-helpful-tutorials" class="headerlink" title="Reference and helpful tutorials:"></a>Reference and helpful tutorials:</h2><ol>
+<li><a href="https://sylabs.io/" target="_blank" rel="noopener">Singularity official website</a><br>→ <a href="https://sylabs.io/docs/" target="_blank" rel="noopener">Documentation</a>: The Singularity on FARM is singularity/3.5.2 in Oct 2020.</li>
+</ol>
+<ol start="2">
+<li><a href="https://seqera.io/training/#_singularity" target="_blank" rel="noopener">Nextflow training</a>: Check “8.2. Singularity”. Just enough Singularity for working on FARM.</li>
+</ol>
+<ol start="3">
+<li><a href="https://biocontainers-edu.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">BioContainers’s documentation!</a>: I used the example in the “Getting started with Docker” section.</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Dry-lab/" rel="tag"># Dry_lab</a>
+          
+            <a href="/tags/FARM/" rel="tag"># FARM</a>
+          
+            <a href="/tags/Containers/" rel="tag"># Containers</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/02/20200702-Finding-suitable-aligners-for-my-project/" rel="next" title="Finding suitable aligners for my project">
+                <i class="fa fa-chevron-left"></i> Finding suitable aligners for my project
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://i.imgur.com/gJGAo55.jpg"
+                alt="Po-Kai" />
+            
+              <p class="site-author-name" itemprop="name">Po-Kai</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/loubya" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-using-Singularity"><span class="nav-number">1.</span> <span class="nav-text">Why using Singularity?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Run-Singularity-on-FARM-Basic"><span class="nav-number">2.</span> <span class="nav-text">Run Singularity on FARM: Basic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-Singularity-image"><span class="nav-number">2.1.</span> <span class="nav-text">Create a Singularity image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pull-images"><span class="nav-number">2.2.</span> <span class="nav-text">Pull images</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interact-with-Singularity-images"><span class="nav-number">2.3.</span> <span class="nav-text">Interact with Singularity images</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Run-Singularity-on-FARM-with-the-Blast-example-on-Bocontainers"><span class="nav-number">3.</span> <span class="nav-text">Run Singularity on FARM: with the Blast example on Bocontainers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Download-BLAST-image"><span class="nav-number">3.1.</span> <span class="nav-text">Download BLAST image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Download-the-necessary-data-for-BLAST"><span class="nav-number">3.2.</span> <span class="nav-text">Download the necessary data for BLAST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-the-BLAST"><span class="nav-number">3.3.</span> <span class="nav-text">Run the BLAST</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference-and-helpful-tutorials"><span class="nav-number">4.</span> <span class="nav-text">Reference and helpful tutorials:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Po-Kai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://pokainote.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://loubya.github.io/2020/10/10/20201010-FARM-Singularity/';
+          this.page.identifier = '2020/10/10/20201010-FARM-Singularity/';
+          this.page.title = 'Using Singularity on UCD FARM Cluster';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://pokainote.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
