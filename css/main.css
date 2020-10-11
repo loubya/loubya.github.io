@@ -1819,7 +1819,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #21c1ff;
+  background: #0d015d;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2986,4 +2986,12 @@ pre .javascript .function {
   .post-body {
     text-align: justify;
   }
+}
+.post-body a:not(.btn) {
+  color: #3296fa;
+  border-bottom: none;
+}
+.post-body a:not(.btn):hover {
+  color: #0593d3;
+  text-decoration: underline;
 }
