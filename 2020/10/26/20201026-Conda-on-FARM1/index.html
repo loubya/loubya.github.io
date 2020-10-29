@@ -88,10 +88,11 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.imgur.com/4OhgJv7.png">
 <meta property="og:image" content="https://i.imgur.com/B4YwSdT.png">
+<meta property="og:image" content="https://i.imgur.com/plfc9eq.png">
 <meta property="og:image" content="https://i.imgur.com/CX6BlWs.png">
 <meta property="og:image" content="https://i.imgur.com/wNncqh1.png">
 <meta property="article:published_time" content="2020-10-27T05:40:12.000Z">
-<meta property="article:modified_time" content="2020-10-27T06:21:08.715Z">
+<meta property="article:modified_time" content="2020-10-29T06:39:17.705Z">
 <meta property="article:author" content="Po-Kai">
 <meta property="article:tag" content="Dry_lab">
 <meta property="article:tag" content="FARM">
@@ -384,7 +385,7 @@
         <h2 id="What-is-Conda"><a href="#What-is-Conda" class="headerlink" title="What is Conda?"></a>What is Conda?</h2><blockquote><p>Package, dependency and environment management for any language—Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN, and more.</p>
 <footer><strong>Conda documentation</strong><cite><a href="https://docs.conda.io/en/latest/" target="_blank" rel="noopener">docs.conda.io/en/latest</a></cite></footer></blockquote>
 
-
+<hr>
 <p>This introduction from the official website clearly describes 2 important features of Conda:</p>
 <ol>
 <li>Version management</li>
@@ -407,6 +408,9 @@
 <li><p>Conda: The <strong>package management system</strong> in Anaconda/Miniconda. You can set up the “channel” for downloading the software you have an interest in.</p>
 </li>
 <li><p>Bioconda: A <strong>channel</strong> for Conda, which is specified for bioinformatics software.</p>
+<blockquote>
+<p>The longer introduction of channel of Conda: <a href="https://conda.io/projects/conda/en/latest/user-guide/concepts/channels.html" target="_blank" rel="noopener">Here</a></p>
+</blockquote>
 </li>
 </ol>
 <p>Here is the relationship between them:<br><img src="https://i.imgur.com/4OhgJv7.png" alt="Imgur"></p>
@@ -418,10 +422,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
 
 <p>Install:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Miniconda3-latest-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash Miniconda3-latest-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
 
 <p>There are some questions popping out during the installation:<br>→ accept the license terms [yes]<br>→ install in [The_Directory_you_like]<br>→ Do you wish the installer to initialize Miniconda3 by running conda init? [yes]</p>
 <p>Now you have the Miniconda with Conda inside. Here is a glimpse of the installation. Notice that it modified the bashrc file (see the discussion below).<br><img src="https://i.imgur.com/B4YwSdT.png" alt="Imgur"></p>
+<p>You can check the details of conda you have by:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda info</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/plfc9eq.png" alt="Imgur"></p>
 <h2 id="Set-up-for-Bioconda"><a href="#Set-up-for-Bioconda" class="headerlink" title="Set up for Bioconda"></a>Set up for Bioconda</h2><p>Bioconda is one of the channels for Conda to download packages. In addition to Bioconda, you can add more channels if you want. Some could help you improve the download speed. Here I’d like to introduce the basic one suggested on the official website. <strong>It is important to add them in this order</strong> so that the priority is set correctly (that is, conda-forge is the highest priority).</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels defaults</span><br><span class="line">conda config --add channels bioconda</span><br><span class="line">conda config --add channels conda-forge</span><br></pre></td></tr></table></figure>
 
