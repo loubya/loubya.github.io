@@ -262,6 +262,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://loubya.github.io/2020/11/02/20201102-Conda-on-FARM2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Po-Kai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.imgur.com/gJGAo55.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Po-Kai's Note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/11/02/20201102-Conda-on-FARM2/" itemprop="url">20201102-Conda-on-FARM2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-02T21:34:48-08:00">
+                2020-11-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FARM/" itemprop="url" rel="index">
+                    <span itemprop="name">FARM</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FARM/Conda/" itemprop="url" rel="index">
+                    <span itemprop="name">Conda</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/11/02/20201102-Conda-on-FARM2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/11/02/20201102-Conda-on-FARM2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Conda normalizes the installation procedures of a wide variety of programs and provides 2 ways for installation:<br>(a) installing packages <strong>manually by <code>conda install</code></strong><br>(b) installing through a <strong>YAML file</strong>. </p>
+<p>In this post, I am covering the first method. </p>
+<h2 id="What-is-the-Conda-environment-and-why-using-it"><a href="#What-is-the-Conda-environment-and-why-using-it" class="headerlink" title="What is the Conda environment and why using it?"></a>What is the Conda environment and why using it?</h2><p>Before diving into how to use Conda to install packages, let’s talk about some aspects of the “environment”. </p>
+<p>As mentioned in the previous post, Conda has two features: (1) a package manager for program installing and version control and (2) an environment manager. Environment management is especially important for developers because they have to be confident that their applications can run smoothly in different environments (e.g. different dependencies, software versions, or operating systems) used by their cohorts or clients. So, you might ask that: does the environment really matter to me if I am just a user of packages? </p>
+<p>Well, a good concept of environment will help you avoid some undesirable pitfalls when using Conda, and Conda environments will become a great tool to increase the reproducibility of your assay. Thus, first, let’s take a look at how Conda acts as an environment manager.</p>
+<p>After the installation is completed, the installer, either Anaconda or Miniconda, will create a <strong>“base” environment</strong>, which contains a list of packages. All the packages are ready to use in the <code>base</code> environment, and it is quite handy most of the time. However, if you are going to add more gears in Conda, especially very old or novel tools, the setting of the <code>base</code> environment may not fit the requirements of those tools. Conda provides a simple way to create an <strong>isolate environment</strong> and you can run it without affecting other environments. You can imagine that the <code>base</code> environment is the bench in your lab and you can do most of the examines on it, but for some special analyses, say, radioactive experiments, you have to go to a specific room with particular types of equipment. </p>
+<p>Even for the bioinformatic programs that you think are regularly-used and up-to-date, it is still <strong>not</strong> a good idea to put all of them in the <code>base</code> environment because the dependency conflict can easily undermine reproducibility. For example, the newly installed software may update some of the existing packages in your <code>base</code> environment, and turns out this change tweaks the setting of the existing programs so that you cannot reproduce the results you ran a month ago anymore. It would be really painful if you have to figure this out when your PI asks you what causes the difference…Besides, the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#installing-similar-packages" target="_blank" rel="noopener">official document</a> of Conda mentions that the packages with similar filenames and serve similar purposes may cause some problem if they are installed in the same environment. Therefore, <strong>create isolated environments for your bioinformatic tools!</strong> This also provides an additional benefit: you can export the environment of a specific pipeline for your cohort so that he/she can run the pipeline without worrying about the setting. This will save both you and your cohort’s lives.</p>
+<p><a href="https://www.freecodecamp.org/news/why-you-need-python-environments-and-how-to-manage-them-with-conda-85f155f4353c/" target="_blank" rel="noopener">Here</a> is a very good article for whom is interested in more details of Conda environment management. The author used very vivid comparisons to explain how Conda works.</p>
+<h2 id="Get-your-tools-manually-by-conda-install"><a href="#Get-your-tools-manually-by-conda-install" class="headerlink" title="Get your tools manually by conda install"></a>Get your tools manually by <code>conda install</code></h2><p>Goal: Create a new environment called “aligners”, and install Hisat2 and STAR, two aligners used in my project, in the <code>aligners</code> environment.</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/11/02/20201102-Conda-on-FARM2/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://loubya.github.io/2020/10/26/20201026-Conda-on-FARM1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1479,7 +1655,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

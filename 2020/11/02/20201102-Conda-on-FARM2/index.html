@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Dry_lab,FARM,Conda," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Conda normalizes the installation procedures of a wide variety of programs and provides 2 ways for installation:(a) installing packages manually by conda install(b) installing through a YAML file.  In">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20201102-Conda-on-FARM2">
+<meta property="og:url" content="https://loubya.github.io/2020/11/02/20201102-Conda-on-FARM2/index.html">
+<meta property="og:site_name" content="Po-Kai&#39;s Note">
+<meta property="og:description" content="Conda normalizes the installation procedures of a wide variety of programs and provides 2 ways for installation:(a) installing packages manually by conda install(b) installing through a YAML file.  In">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/ISnYF9N.png">
+<meta property="og:image" content="https://i.imgur.com/Pjcod4B.png">
+<meta property="og:image" content="https://i.imgur.com/qvmhbdB.png">
+<meta property="og:image" content="https://i.imgur.com/pL097wq.png">
+<meta property="og:image" content="https://i.imgur.com/EW5PA4B.png">
+<meta property="og:image" content="https://i.imgur.com/GxLPbtU.png">
+<meta property="og:image" content="https://i.imgur.com/solngpa.png">
+<meta property="og:image" content="https://i.imgur.com/rs3P5ld.png">
+<meta property="og:image" content="https://i.imgur.com/VcGXpzL.png">
+<meta property="og:image" content="https://i.imgur.com/ivaX7LM.png">
+<meta property="og:image" content="https://i.imgur.com/26LBQs1.png">
+<meta property="article:published_time" content="2020-11-03T05:34:48.000Z">
+<meta property="article:modified_time" content="2020-11-03T05:40:18.369Z">
+<meta property="article:author" content="Po-Kai">
+<meta property="article:tag" content="Dry_lab">
+<meta property="article:tag" content="FARM">
+<meta property="article:tag" content="Conda">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/ISnYF9N.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://loubya.github.io/2020/11/02/20201102-Conda-on-FARM2/"/>
+
+
+
+
+
+  <title>20201102-Conda-on-FARM2 | Po-Kai's Note</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Po-Kai's Note</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">A Ph.D. student's random writing</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://loubya.github.io/2020/11/02/20201102-Conda-on-FARM2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Po-Kai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.imgur.com/gJGAo55.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Po-Kai's Note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">20201102-Conda-on-FARM2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-02T21:34:48-08:00">
+                2020-11-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FARM/" itemprop="url" rel="index">
+                    <span itemprop="name">FARM</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FARM/Conda/" itemprop="url" rel="index">
+                    <span itemprop="name">Conda</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/11/02/20201102-Conda-on-FARM2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/11/02/20201102-Conda-on-FARM2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Conda normalizes the installation procedures of a wide variety of programs and provides 2 ways for installation:<br>(a) installing packages <strong>manually by <code>conda install</code></strong><br>(b) installing through a <strong>YAML file</strong>. </p>
+<p>In this post, I am covering the first method. </p>
+<h2 id="What-is-the-Conda-environment-and-why-using-it"><a href="#What-is-the-Conda-environment-and-why-using-it" class="headerlink" title="What is the Conda environment and why using it?"></a>What is the Conda environment and why using it?</h2><p>Before diving into how to use Conda to install packages, let’s talk about some aspects of the “environment”. </p>
+<p>As mentioned in the previous post, Conda has two features: (1) a package manager for program installing and version control and (2) an environment manager. Environment management is especially important for developers because they have to be confident that their applications can run smoothly in different environments (e.g. different dependencies, software versions, or operating systems) used by their cohorts or clients. So, you might ask that: does the environment really matter to me if I am just a user of packages? </p>
+<p>Well, a good concept of environment will help you avoid some undesirable pitfalls when using Conda, and Conda environments will become a great tool to increase the reproducibility of your assay. Thus, first, let’s take a look at how Conda acts as an environment manager.</p>
+<p>After the installation is completed, the installer, either Anaconda or Miniconda, will create a <strong>“base” environment</strong>, which contains a list of packages. All the packages are ready to use in the <code>base</code> environment, and it is quite handy most of the time. However, if you are going to add more gears in Conda, especially very old or novel tools, the setting of the <code>base</code> environment may not fit the requirements of those tools. Conda provides a simple way to create an <strong>isolate environment</strong> and you can run it without affecting other environments. You can imagine that the <code>base</code> environment is the bench in your lab and you can do most of the examines on it, but for some special analyses, say, radioactive experiments, you have to go to a specific room with particular types of equipment. </p>
+<p>Even for the bioinformatic programs that you think are regularly-used and up-to-date, it is still <strong>not</strong> a good idea to put all of them in the <code>base</code> environment because the dependency conflict can easily undermine reproducibility. For example, the newly installed software may update some of the existing packages in your <code>base</code> environment, and turns out this change tweaks the setting of the existing programs so that you cannot reproduce the results you ran a month ago anymore. It would be really painful if you have to figure this out when your PI asks you what causes the difference…Besides, the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#installing-similar-packages" target="_blank" rel="noopener">official document</a> of Conda mentions that the packages with similar filenames and serve similar purposes may cause some problem if they are installed in the same environment. Therefore, <strong>create isolated environments for your bioinformatic tools!</strong> This also provides an additional benefit: you can export the environment of a specific pipeline for your cohort so that he/she can run the pipeline without worrying about the setting. This will save both you and your cohort’s lives.</p>
+<p><a href="https://www.freecodecamp.org/news/why-you-need-python-environments-and-how-to-manage-them-with-conda-85f155f4353c/" target="_blank" rel="noopener">Here</a> is a very good article for whom is interested in more details of Conda environment management. The author used very vivid comparisons to explain how Conda works.</p>
+<h2 id="Get-your-tools-manually-by-conda-install"><a href="#Get-your-tools-manually-by-conda-install" class="headerlink" title="Get your tools manually by conda install"></a>Get your tools manually by <code>conda install</code></h2><p>Goal: Create a new environment called “aligners”, and install Hisat2 and STAR, two aligners used in my project, in the <code>aligners</code> environment.</p>
+<a id="more"></a>
+
+<h4 id="1-Create-an-environment-for-your-task-conda-create"><a href="#1-Create-an-environment-for-your-task-conda-create" class="headerlink" title="1. Create an environment for your task: conda create"></a>1. Create an environment for your task: <code>conda create</code></h4><p>As I mentioned in the previous section, remember to create an isolated environment for the packages installed by yourself!</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n aligners</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-n: environment</p>
+</blockquote>
+<p><img src="https://i.imgur.com/ISnYF9N.png" alt="Imgur"></p>
+<p>Conda will tell you the localization of the environment, and it’s an interactive process, so remember to select [yes]. Also, you can see that at the end of the installation, the system shows how to activate/deactivate the environment.</p>
+<h4 id="2-Search-for-the-packages-Check-the-version-of-the-target-packages-conda-search"><a href="#2-Search-for-the-packages-Check-the-version-of-the-target-packages-conda-search" class="headerlink" title="2. Search for the packages/Check the version of the target packages: conda search"></a>2. Search for the packages/Check the version of the target packages: <code>conda search</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda search hisat2</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/Pjcod4B.png" alt="Imgur"></p>
+<p>There are lots of versions of Hisat2 available, and they are ordered from the oldest (at the top) to the newest (at the bottom).<br>Let’s use a simple bash command to check the latest version:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda search hisat2 | tail -n 1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/qvmhbdB.png" alt="Imgur"></p>
+<h4 id="3-Install-packages-conda-install"><a href="#3-Install-packages-conda-install" class="headerlink" title="3. Install packages: conda install"></a>3. Install packages: <code>conda install</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -n aligners hisat2 star</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-n: environment; Note, if you didn’t set this up, Conda will install the package in the currently activate environment (<code>base</code> environment if you do not activate any).</p>
+</blockquote>
+<p><img src="https://i.imgur.com/pL097wq.png" alt="Imgur"></p>
+<p>At the beginning of the installation process, Conda will let you know which packages will be downloaded/installed and where they are going to be installed. As you can see, in addition to STAR and Hisat2, lots of dependencies were installed. Besides, you can find which channel was used for downloading the packages. For example, STAR and Hisat2 were from Bioconda, and others were from conda-forge.</p>
+<h4 id="4-Check-the-environment-conda-list"><a href="#4-Check-the-environment-conda-list" class="headerlink" title="4. Check the environment: conda list"></a>4. Check the environment: <code>conda list</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda list -n aligners</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-n: environment</p>
+</blockquote>
+<p><img src="https://i.imgur.com/EW5PA4B.png" alt="Imgur"></p>
+<p>Again, you can see the detailed information of each package. By the way, if you do not assign the environment with <code>-n</code>, the packages in the currently active environment will be shown.</p>
+<h4 id="5-Activate-the-environment-and-use-the-packages-conda-activate"><a href="#5-Activate-the-environment-and-use-the-packages-conda-activate" class="headerlink" title="5. Activate the environment and use the packages: conda activate"></a>5. Activate the environment and use the packages: <code>conda activate</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate aligners</span><br></pre></td></tr></table></figure>
+
+<p>Here is a small test: I called Hisat2 before and after activating the <code>aligners</code>environment.<br><img src="https://i.imgur.com/GxLPbtU.png" alt="Imgur"><br>When I was in the <code>base</code> environment, the system told me that command <code>hisat2</code> was not found. In contrast, after activating the <code>aligners</code> environment, key in <code>hisat2</code> returned the corresponding help page, indicating the computer found the program. Note that the terminal prompt changed upon the activation of the environment.</p>
+<h4 id="6-Leave-the-environment"><a href="#6-Leave-the-environment" class="headerlink" title="6. Leave the environment"></a>6. Leave the environment</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-List-all-environments-you-have"><a href="#7-List-all-environments-you-have" class="headerlink" title="7. List all environments you have:"></a>7. List all environments you have:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env list</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/solngpa.png" alt="Imgur"><br>This command will list all the environments and their directories. The activate environment is marked with a star sign (*).</p>
+<h2 id="Set-up-at-once"><a href="#Set-up-at-once" class="headerlink" title="Set up at once"></a>Set up at once</h2><p><img src="https://i.imgur.com/rs3P5ld.png" alt="Imgur"><br>Here is the help page of <code>conda create</code>, and I labeled some of the commonly used commands.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>(<font color=#FF0000>red boxes</font>)<br><strong>-y: yes to all the interactive installation procedures</strong><br>-c: assign the channel for downloading the package<br>-n: environment</p>
+</blockquote>
+<p>Note, there is an option for installing packages (the <font color=#008000>green box</font>). Therefore, you can create an environment and install all the package at once without answering [yes] during the process:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n aligners2 hisat2 star -y</span><br></pre></td></tr></table></figure>
+
+<p>Alternatively, you can do similar things using <code>conda install</code> if the environment has already existed:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n aligners3 -y</span><br><span class="line">conda install -n aligners3 hisat2 star -y</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Playing-around-with-the-aligners-examples"><a href="#Playing-around-with-the-aligners-examples" class="headerlink" title="Playing around with the aligners examples"></a>Playing around with the <code>aligners</code> examples</h2><p>Goal: Test if the environments are independent of each other. </p>
+<p>Logic flow: (a) install the different version of STAR in the <code>base</code> environment, and then (b) call <code>STAR</code> when activating different environments and check the versions.</p>
+<h4 id="1-Check-the-released-version-of-STAR-and-install-the-old-version-in-base-environment"><a href="#1-Check-the-released-version-of-STAR-and-install-the-old-version-in-base-environment" class="headerlink" title="1. Check the released version of STAR and install the old version in base environment:"></a>1. Check the released version of STAR and install the old version in <code>base</code> environment:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda search star</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/VcGXpzL.png" alt="Imgur"><br>I chose the previous version: 2.6.1a (<font color=#FF0000>red box</font>).</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install star=2.6.1a</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-Examine-if-the-environments-are-isolated"><a href="#2-Examine-if-the-environments-are-isolated" class="headerlink" title="2. Examine if the environments are isolated"></a>2. Examine if the environments are isolated</h4><p>Here is the version of STAR in the <code>base</code> environment.<br><img src="https://i.imgur.com/ivaX7LM.png" alt="Imgur"></p>
+<p>Here is the version of STAR in the <code>aligners</code> environment.<br><img src="https://i.imgur.com/26LBQs1.png" alt="Imgur"></p>
+<p>As you can see, STAR with different versions were launched in different environments.</p>
+<h2 id="Tip"><a href="#Tip" class="headerlink" title="Tip"></a>Tip</h2><ol>
+<li><p>If possible, install all packages at once because Conda can then take care of all dependencies at the same time.</p>
+</li>
+<li><p>Always use <code>conda install</code> in your environment if possible rather by the classic installation method.</p>
+</li>
+<li><p>For more information on the package, you can check the <a href="https://bioconda.github.io/conda-package_index.html" target="_blank" rel="noopener">package Index</a> on the Bioconda website. It also provides Docker image.</p>
+</li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.freecodecamp.org/news/why-you-need-python-environments-and-how-to-manage-them-with-conda-85f155f4353c/" target="_blank" rel="noopener">Why You Need Python Environments and How to Manage Them with Conda</a></p>
+<p><a href="https://docs.conda.io/projects/conda/en/latest/index.html" target="_blank" rel="noopener">Conda — conda 4.9.0.post12+a9f5f25d documentation</a></p>
+<p><a href="https://bioconda.github.io/tutorials/gcb2020.html#conda-environments" target="_blank" rel="noopener">GCB 2020 Tutorial — Bioconda documentation</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Dry-lab/" rel="tag"># Dry_lab</a>
+          
+            <a href="/tags/FARM/" rel="tag"># FARM</a>
+          
+            <a href="/tags/Conda/" rel="tag"># Conda</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/26/20201026-Conda-on-FARM1/" rel="next" title="Runing Conda/Bioconda on UCD FARM Cluster (I): Install and setup Conda/Bioconda">
+                <i class="fa fa-chevron-left"></i> Runing Conda/Bioconda on UCD FARM Cluster (I): Install and setup Conda/Bioconda
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://i.imgur.com/gJGAo55.jpg"
+                alt="Po-Kai" />
+            
+              <p class="site-author-name" itemprop="name">Po-Kai</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/loubya" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-the-Conda-environment-and-why-using-it"><span class="nav-number">1.</span> <span class="nav-text">What is the Conda environment and why using it?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-your-tools-manually-by-conda-install"><span class="nav-number">2.</span> <span class="nav-text">Get your tools manually by conda install</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Create-an-environment-for-your-task-conda-create"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. Create an environment for your task: conda create</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Search-for-the-packages-Check-the-version-of-the-target-packages-conda-search"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. Search for the packages&#x2F;Check the version of the target packages: conda search</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Install-packages-conda-install"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. Install packages: conda install</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Check-the-environment-conda-list"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. Check the environment: conda list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Activate-the-environment-and-use-the-packages-conda-activate"><span class="nav-number">2.0.5.</span> <span class="nav-text">5. Activate the environment and use the packages: conda activate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Leave-the-environment"><span class="nav-number">2.0.6.</span> <span class="nav-text">6. Leave the environment</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-List-all-environments-you-have"><span class="nav-number">2.0.7.</span> <span class="nav-text">7. List all environments you have:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-up-at-once"><span class="nav-number">3.</span> <span class="nav-text">Set up at once</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Playing-around-with-the-aligners-examples"><span class="nav-number">4.</span> <span class="nav-text">Playing around with the aligners examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Check-the-released-version-of-STAR-and-install-the-old-version-in-base-environment"><span class="nav-number">4.0.1.</span> <span class="nav-text">1. Check the released version of STAR and install the old version in base environment:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Examine-if-the-environments-are-isolated"><span class="nav-number">4.0.2.</span> <span class="nav-text">2. Examine if the environments are isolated</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip"><span class="nav-number">5.</span> <span class="nav-text">Tip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Po-Kai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://pokainote.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://loubya.github.io/2020/11/02/20201102-Conda-on-FARM2/';
+          this.page.identifier = '2020/11/02/20201102-Conda-on-FARM2/';
+          this.page.title = '20201102-Conda-on-FARM2';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://pokainote.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
